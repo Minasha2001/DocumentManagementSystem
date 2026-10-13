@@ -1,0 +1,980 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register - Archive File Management System</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@400;500;600;700&family=Noto+Sans+Sinhala:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* BACKGROUND */
+        .page {
+            min-height: 100vh;
+            width: 100%;
+            background-image: url("background1.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            overflow: hidden;
+
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            padding: 20px 60px 20px 20px;
+            isolation: isolate;
+        }
+
+        /* OVERLAY */
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(7, 31, 55, 0.12);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* HEADER */
+        .header {
+            position: absolute;
+            top: 98px;
+            left: 26%;
+            display: flex;
+            align-items: center;
+            z-index: 5;
+        }
+
+        .logo-box {
+            width: 100px;
+            height: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .logo-box img {
+            max-width: 88px;
+            max-height: 120px;
+            object-fit: contain;
+            transform: translateY(-26px);
+        }
+
+        .vertical-line {
+            width: 1px;
+            height: 128px;
+            background: #073d70;
+            margin: 0 27px 0 15px;
+            transform: translateY(-22px);
+            flex-shrink: 0;
+        }
+
+        .institution {
+            color: #083c6e;
+        }
+
+        .institution .sinhala {
+            font-family: "Noto Sans Sinhala", "Poppins", sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .institution .tamil {
+            font-size: 26px;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        .institution .english {
+            font-family: Georgia, serif;
+            font-size: 26.5px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        /* TAGLINE */
+        .institution .tagline {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            font-weight: 500;
+            font-style: italic;
+            color: #083c6e;
+            margin-top: 37px;
+            white-space: nowrap;
+            transform: translateX(-24px);
+        }
+
+        /* REGISTER CARD */
+        .register-card {
+            position: relative;
+            z-index: 5;
+            width: 690px;
+            max-width: 94%;
+            margin-top: -30px;
+            padding: 30px 31px 19px;
+
+            background: rgba(255, 255, 255, 0.97);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 21px;
+
+            box-shadow:
+                0 20px 55px rgba(0, 0, 0, 0.30),
+                0 5px 20px rgba(0, 0, 0, 0.10);
+
+            backdrop-filter: blur(12px);
+            animation: cardAppear 0.7s ease;
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* REGISTER HEADER */
+        .register-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .register-icon {
+            width: 55px;
+            height: 55px;
+            margin: 0 auto 7px;
+            border-radius: 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: linear-gradient(135deg, #0d6efd, #174a8b);
+            color: white;
+            font-size: 25px;
+
+            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.25);
+        }
+
+        .register-header h1 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 32px;
+            color: #173b61;
+            margin-bottom: 5px;
+        }
+
+        .register-header p {
+            color: #718096;
+            font-size: 15.5px;
+        }
+
+        /* FORM */
+        .form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-group {
+            width: 100%;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 15px;
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 4px;
+        }
+
+        .input-box {
+            height: 41px;
+            display: flex;
+            align-items: center;
+
+            border: 1px solid #d9e1ea;
+            border-radius: 10px;
+            background: #f9fbfd;
+            transition: all 0.25s ease;
+        }
+
+        .input-box > i:first-child {
+            width: 42px;
+            flex-shrink: 0;
+            text-align: center;
+            color: #6d8ba8;
+            font-size: 18px;
+        }
+
+        .input-box input,
+        .input-box select {
+            flex: 1;
+            min-width: 0;
+            height: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+
+            font-family: 'Poppins', sans-serif;
+            font-size: 15.5px;
+            color: #26384a;
+            padding-right: 10px;
+        }
+
+        .input-box input::placeholder {
+            color: #9caab7;
+            font-size: 15px;
+        }
+
+        .input-box select {
+            cursor: pointer;
+            color: #526577;
+        }
+
+        .input-box:focus-within {
+            background: white;
+            border-color: #4c8edb;
+            box-shadow: 0 0 0 3px rgba(76, 142, 219, 0.10);
+        }
+
+        /* TWO COLUMNS */
+        .two-column-row {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 13px;
+        }
+
+        /* PASSWORD */
+        .password-box {
+            position: relative;
+        }
+
+        .password-box input {
+            padding-right: 40px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            width: auto !important;
+            color: #7d8b98 !important;
+            cursor: pointer;
+            font-size: 15px !important;
+            transition: 0.2s;
+        }
+
+        .toggle-password:hover {
+            color: #315f8c !important;
+        }
+
+        /* BUTTONS */
+        .button-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .btn {
+            height: 41px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .register-btn {
+            color: white;
+            background: linear-gradient(135deg, #0d6efd, #174a8b);
+            box-shadow: 0 7px 18px rgba(13, 110, 253, 0.22);
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(13, 110, 253, 0.30);
+        }
+
+        .back-btn {
+            color: #315f8c;
+            background: #edf3f8;
+            border: 1px solid #d6e0e9;
+        }
+
+        .back-btn:hover {
+            background: #e2ebf3;
+            transform: translateY(-2px);
+        }
+
+        /* LOGIN TEXT */
+        .login-text {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 13.5px;
+            color: #7b8794;
+        }
+
+        .login-text a {
+            color: #1769aa;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* BOTTOM BLUE CURVE */
+        .bottom-curve {
+            position: absolute;
+            left: -5%;
+            bottom: -65px;
+            width: 62%;
+            height: 180px;
+
+            background: linear-gradient(
+                135deg,
+                #073861 0%,
+                #052b4d 55%,
+                #031f3d 100%
+            );
+
+            border-top: 2px solid rgba(112, 201, 242, 0.65);
+            border-radius: 50% 65% 0 0;
+            transform: rotate(-2.5deg);
+            transform-origin: left bottom;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* BOTTOM LEFT FEATURES */
+        .features {
+            position: absolute;
+            bottom: 35px;
+            left: 4%;
+            width: 55%;
+            display: flex;
+            align-items: center;
+            z-index: 7;
+        }
+
+        .feature {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            padding: 0 13px;
+            border-right: 1px solid rgba(255, 255, 255, 0.35);
+        }
+
+        .feature:first-child {
+            padding-left: 0;
+        }
+
+        .feature:last-child {
+            border-right: none;
+        }
+
+        .feature i {
+            font-size: 28px;
+            min-width: 25px;
+            color: #ffffff;
+        }
+
+        .feature span {
+            font-size: 13px;
+            line-height: 1.5;
+            font-weight: 500;
+            color: #ffffff;
+            white-space: nowrap;
+        }
+
+        /* TEXT BELOW REGISTER CARD */
+        .card-footer-text {
+            position: absolute;
+            right: 60px;
+            bottom: 12px;
+            width: 690px;
+            max-width: 94%;
+            text-align: center;
+            color: #ffffff;
+            z-index: 6;
+            pointer-events: none;
+        }
+
+        .card-footer-text p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .card-footer-text h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* TABLETS */
+        @media (max-width: 1200px) {
+            .header {
+                left: 11%;
+            }
+
+            .features {
+                width: 50%;
+                left: 3%;
+                bottom: 30px;
+            }
+
+            .feature {
+                padding: 0 9px;
+                gap: 7px;
+            }
+
+            .feature i {
+                font-size: 20px;
+                min-width: 22px;
+            }
+
+            .feature span {
+                font-size: 10px;
+            }
+        }
+
+        /* SMALL SCREENS */
+        @media (max-width: 900px) {
+            .page {
+                justify-content: center;
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+                min-height: 100vh;
+                overflow: visible;
+            }
+
+            .header {
+                position: relative;
+                top: auto;
+                left: auto;
+                justify-content: center;
+                margin-bottom: 20px;
+                max-width: 100%;
+            }
+
+            .register-card {
+                margin-top: 0;
+                width: 690px;
+            }
+
+            .bottom-curve {
+                left: -5%;
+                bottom: 0;
+                width: 100%;
+                height: 150px;
+                border-radius: 50% 50% 0 0;
+                transform: rotate(-2deg);
+            }
+
+            .features {
+                position: relative;
+                left: auto;
+                bottom: auto;
+                width: 100%;
+                max-width: 600px;
+                margin: 20px auto 0;
+                padding: 22px 16px;
+
+                background: linear-gradient(
+                    135deg,
+                    #073861,
+                    #052b4d 55%,
+                    #031f3d
+                );
+
+                border-top: 2px solid rgba(112, 201, 242, 0.65);
+                border-radius: 16px;
+                box-shadow: 0 10px 28px rgba(0, 31, 61, 0.22);
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .feature {
+                flex: 1 1 40%;
+                padding: 8px;
+                border-right: none;
+            }
+
+            .feature:first-child {
+                padding-left: 8px;
+            }
+
+            .feature span {
+                font-size: 12px;
+            }
+
+            .card-footer-text {
+                position: relative;
+                right: auto;
+                bottom: auto;
+                width: 100%;
+                max-width: 600px;
+                margin: 12px auto 0;
+                color: #ffffff;
+            }
+
+            .card-footer-text p {
+                font-size: 12px;
+            }
+
+            .card-footer-text h3 {
+                font-size: 15px;
+            }
+        }
+
+        /* MOBILE */
+        @media (max-width: 700px) {
+            .page {
+                padding: 20px;
+            }
+
+            .header {
+                display: flex;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .register-card {
+                padding: 22px 20px 19px;
+            }
+
+            .two-column-row {
+                grid-template-columns: 1fr;
+            }
+
+            .button-area {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                display: block;
+                text-align: center;
+            }
+
+            .logo-box {
+                margin: auto;
+            }
+
+            .vertical-line {
+                display: none;
+            }
+
+            .institution .sinhala {
+                font-size: 22px;
+            }
+
+            .institution .tamil {
+                font-size: 16px;
+            }
+
+            .institution .english {
+                font-size: 18px;
+            }
+
+            .institution .tagline {
+                font-size: 13px;
+                white-space: normal;
+                text-align: center;
+                transform: none;
+                margin-top: 15px;
+            }
+
+            .features {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 18px 12px;
+                padding: 20px 15px;
+            }
+
+            .feature {
+                padding: 0;
+                border: none;
+                gap: 9px;
+            }
+
+            .feature:first-child {
+                padding-left: 0;
+            }
+
+            .feature i {
+                font-size: 21px;
+                min-width: 23px;
+            }
+
+            .feature span {
+                font-size: 10px;
+                white-space: normal;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page {
+                padding: 15px 8px;
+            }
+
+            .register-card {
+                max-width: 100%;
+                border-radius: 18px;
+            }
+
+            .register-header h1 {
+                font-size: 26px;
+            }
+
+            .register-header p {
+                font-size: 14px;
+            }
+
+            .input-group label {
+                font-size: 14px;
+            }
+
+            .input-box input,
+            .input-box select {
+                font-size: 14.5px;
+            }
+
+            .btn {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="overlay"></div>
+
+    <!-- SOUTHERN PROVINCIAL COUNCIL HEADER -->
+    <div class="header">
+
+        <div class="logo-box">
+            <img src="logo.webp" alt="Southern Provincial Council Emblem">
+        </div>
+
+        <div class="vertical-line"></div>
+
+        <div class="institution">
+            <div class="sinhala">දකුණු පළාත් සභා ලේකම් කාර්යාලය</div>
+            <div class="tamil">தென் மாகாண சட்டசபை அலுவலகம்</div>
+            <div class="english">Southern Provincial Council Secretariat</div>
+
+            <div class="tagline">
+                “Efficient Administration for a Better Tomorrow”
+            </div>
+        </div>
+
+    </div>
+
+    <!-- REGISTER CARD -->
+    <div class="register-card">
+
+        <div class="register-header">
+            <div class="register-icon">
+                <i class="fa-solid fa-user-plus"></i>
+            </div>
+
+            <h1>Create an Account</h1>
+            <p>Register for the Archive File Management System</p>
+        </div>
+
+        <form id="registerForm">
+
+            <div class="form-grid">
+
+                <div class="input-group">
+                    <label for="fullName">Full Name</label>
+                    <div class="input-box">
+                        <i class="fa-solid fa-id-card"></i>
+                        <input type="text" id="fullName"
+                               placeholder="Enter full name" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="nic">NIC Number</label>
+                    <div class="input-box">
+                        <i class="fa-solid fa-address-card"></i>
+                        <input type="text" id="nic"
+                               placeholder="Enter NIC number" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <div class="input-box">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="email"
+                               placeholder="Enter email address" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="designation">Designation</label>
+                    <div class="input-box">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <input type="text" id="designation"
+                               placeholder="Enter designation" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="subjectNumber">Subject Number</label>
+                    <div class="input-box">
+                        <i class="fa-solid fa-hashtag"></i>
+                        <input type="text" id="subjectNumber"
+                               placeholder="Enter subject number" required>
+                    </div>
+                </div>
+
+                <!-- USER TYPE AND DEPARTMENT -->
+                <div class="two-column-row">
+
+                    <div class="input-group">
+                        <label for="userType">User Type</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-user-shield"></i>
+
+                            <select id="userType" required>
+                                <option value="" disabled selected>Select user type</option>
+                                <option value="User">User</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Subject">Subject</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="department">Department</label>
+                        <div class="input-box">
+                            <i class="fa-solid fa-building"></i>
+
+                            <select id="department" required>
+                                <option value="" disabled selected>Select department</option>
+                                <option value="Institutions">Institutions</option>
+                                <option value="Councils">Councils</option>
+                                <option value="Accounts">Accounts</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- USERNAME -->
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <div class="input-box">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="username"
+                               placeholder="Enter username" required>
+                    </div>
+                </div>
+
+                <!-- PASSWORD FIELDS -->
+                <div class="two-column-row">
+
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <div class="input-box password-box">
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input type="password" id="password"
+                                   placeholder="Enter password" required>
+
+                            <i class="fa-solid fa-eye toggle-password"
+                               role="button"
+                               tabindex="0"
+                               aria-label="Show password"
+                               onclick="togglePassword('password', this)"
+                               onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePassword('password',this)}">
+                            </i>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="input-box password-box">
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input type="password" id="confirmPassword"
+                                   placeholder="Confirm password" required>
+
+                            <i class="fa-solid fa-eye toggle-password"
+                               role="button"
+                               tabindex="0"
+                               aria-label="Show confirm password"
+                               onclick="togglePassword('confirmPassword', this)"
+                               onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePassword('confirmPassword',this)}">
+                            </i>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="button-area">
+
+                <button type="button" class="btn back-btn"
+                        onclick="window.location.href='index.html'">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    &nbsp; Back to Login
+                </button>
+
+                <button type="submit" class="btn register-btn">
+                    <i class="fa-solid fa-user-plus"></i>
+                    &nbsp; Create Account
+                </button>
+
+            </div>
+
+        </form>
+
+        <div class="login-text">
+            Already have an account?
+            <a href="index.html">Login here</a>
+        </div>
+
+    </div>
+
+    <!-- TEXT BELOW REGISTER CARD -->
+    <div class="card-footer-text">
+        <p>Southern Provincial Council&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Archive Management System</p>
+    </div>
+
+    <!-- BOTTOM BLUE CURVED BACKGROUND -->
+    <div class="bottom-curve"></div>
+
+    <!-- BOTTOM LEFT FEATURES -->
+    <div class="features">
+
+        <div class="feature">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>Secure<br>Access</span>
+        </div>
+
+        <div class="feature">
+            <i class="fa-regular fa-file-lines"></i>
+            <span>Efficient<br>File Management</span>
+        </div>
+
+        <div class="feature">
+            <i class="fa-regular fa-folder-open"></i>
+            <span>Organized<br>Records</span>
+        </div>
+
+        <div class="feature">
+            <i class="fa-solid fa-users"></i>
+            <span>For a<br>Better Service</span>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    /* PASSWORD SHOW / HIDE */
+    function togglePassword(inputId, icon) {
+        const input = document.getElementById(inputId);
+
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+            icon.setAttribute("aria-label", "Hide password");
+        } else {
+            input.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+            icon.setAttribute("aria-label", "Show password");
+        }
+    }
+
+    /* FORM VALIDATION */
+    document.getElementById("registerForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const password =
+                document.getElementById("password").value;
+
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+                alert("Password and Confirm Password do not match.");
+                return;
+            }
+
+            if (password.length < 6) {
+                alert("Password must contain at least 6 characters.");
+                return;
+            }
+
+            alert("Registration form validation completed successfully.");
+
+            /*
+              This is front-end validation only.
+              PHP and database logic are needed to save account details.
+            */
+        });
+</script>
+
+</body>
+</html>
